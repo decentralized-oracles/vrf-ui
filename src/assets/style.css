@@ -1,0 +1,55 @@
+@font-face {
+    font-family: unbounded;
+    src: url(Unbounded-Regular.ttf);
+}
+span.MuiChip-label {
+    padding-left: 0;
+}
+
+.reset-line-height {
+    line-height: 0 !important;
+}
+
+.logo-wrapper {
+    display: inline-block;
+    background-color: #000;
+    padding: 1.5%;
+    border-radius: 100%;
+    z-index: 10;
+    position: relative;
+    width: 11%;
+    margin-left: 11.5%;
+    border: 3px solid black;
+    vertical-align: middle;
+}
+
+.logo-img {
+    width: 100%;
+    margin: 0 !important;
+    padding: 5%;
+}
+
+.logo-wrapper.ok {
+    border: 3px solid #00EE00;
+}
+
+.logo-wrapper.animate {
+    animation-name: greenglow;
+    animation-duration: 1.5s;
+    animation-timing-function: ease-in;
+    animation-delay: 0s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-fill-mode: none;
+    animation-play-state: running;
+}
+
+@keyframes greenglow {
+    0% {
+        box-shadow: 0 0 5px 1px green;
+    }
+    100% {
+        box-shadow: 0 0 18px 4px #00EE00;
+    }
+}
+
