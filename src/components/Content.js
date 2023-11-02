@@ -3,7 +3,7 @@ import { Box, Button, Grid, TextField, LinearProgress, CircularProgress} from '@
 import { AppContext } from '../context/ContextProvider';
 import { ApiStatus } from './ApiStatus';
 import Lottie from "react-lottie";
-import greenBarJson from "../assets/lotties/greenbar.json";
+
 import { ContractContext } from '../context/AstarContractProvider';
 import { PhatContractContext } from '../context/PhatContractProvider';
 
