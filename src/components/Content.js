@@ -81,15 +81,6 @@ export function Content() {
     }
   }
 
-  const greenBar = {
-    loop: true,
-    autoplay: false,
-    animationData: greenBarJson,
-    rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice"
-    }
-  };
-
   const boxopts = {
     display: 'flex', justifyContent:'center',
     border:"1px rgba(255, 255, 255, 0.23) solid", 
