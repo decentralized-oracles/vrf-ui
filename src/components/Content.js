@@ -123,7 +123,8 @@ Random number has successfuly been processed and has been stored into the Astar 
     borderRadius: '10px',
     minWidth: '45px',
     height: '1.5em',
-    verticalAlign: 'bottom'
+    verticalAlign: 'bottom',
+    textAlign: 'center'
   }
   const lineopts = {
     backgroundColor:'#235500', 
@@ -139,7 +140,7 @@ Random number has successfuly been processed and has been stored into the Astar 
 
 
   return <>
-  <button onClick={()=>vrf_query_answerRequest()}>vrf_query_answerRequest</button>
+  
     <Box sx={{margin:"0 40px 0px 0", flexDirection: 'row-reverse' }} display={'flex'} >
       <ApiStatus context="phala" /><ApiStatus context="astar" />
     </Box>
@@ -172,16 +173,16 @@ Random number has successfuly been processed and has been stored into the Astar 
     </Box>
     <Box sx={{...boxopts,display: 'flex', justifyContent:'space-around', fontSize:'1.5em'}}>
       <Box>Request: 
-        <Box sx={{display:'inline-flex', overflow:'auto'}}>
+        <Box sx={{display:'inline-flex', overflow:'auto', marginLeft:'5px'}}>
           Min=<Box sx={resopts}>{localRandom?.requestMin}</Box>
         </Box> 
-        <Box sx={{display:'inline-flex', overflow:'auto'}}>
+        <Box sx={{display:'inline-flex', overflow:'auto', marginLeft:'5px'}}>
           Max=<Box sx={resopts}>{localRandom?.requestMax}</Box>
         </Box>
       </Box>
       &nbsp;
       <Box>Result: 
-        <Box sx={{display:'inline-flex', overflow:'auto'}}>
+        <Box sx={{display:'inline-flex', overflow:'auto', marginLeft:'5px'}}>
           VRF=<Box sx={resopts}>{localRandom?.randomNumber}</Box>
         </Box>
       </Box>
@@ -200,6 +201,7 @@ Random number has successfuly been processed and has been stored into the Astar 
     <button onClick={()=>doDryRun()}>doDryRun</button>
     <button onClick={()=>doTx("requestRandomValue",10,100)}>doTx requestRandomValue 10 100</button>
     <br/>
+    <button onClick={()=>vrf_query_answerRequest()}>vrf_query_answerRequest</button>
     
 
     <Box>{localRandom?.requestAddress}</Box>
