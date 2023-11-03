@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import { Keyring } from '@polkadot/api'
 import { cryptoWaitReady } from '@polkadot/util-crypto';
 import { setToStorage, getFromStorage } from "../lib/storage";
@@ -12,7 +12,9 @@ export const AppContext = React.createContext();
 export const ContextProvider = ({ children }) => {
   
   const astarApiContext = useContext(AstarApiContext)
-  const { vrf_query_answerRequest_wait_NoRequestInQueue } = useContext(PhatContractContext)
+  const { vrf_query_answerRequest_wait_NoRequestInQueue, setInterruptPC } = useContext(PhatContractContext)
+
+  const refConnectButton = useRef()
 
   const [dappName, setDappName] = useState(DAPP_NAME);
   const [pair, setQueryPair] = useState();
@@ -27,13 +29,17 @@ export const ContextProvider = ({ children }) => {
   const setStep = (s)=> {
     const pstep=globalProcess.step
     setPreviousStep(globalProcess.step)
-    if (!(s==2 && pstep!=1)) {
-        console.log("___###___setStep",s)
-        globalProcess.setStep(s);
-        setStateStep(s)
-        setProcessUpdate(new Date().getMilliseconds())
-        console.log("STEP-------",globalProcess.step)
-      }
+    
+    //if (!(s==2 && pstep!=1)) {
+    if (s==0 || s==1 || s > pstep) {
+      //console.log("___###___setStep",s)
+      globalProcess.setStep(s);
+      setStateStep(s)
+      setProcessUpdate(new Date().getMilliseconds())
+      console.log("setStep",globalProcess.step)
+    }
+    if (s==1) {setInterruptPC(false)}
+    if (s==5) {setInterruptPC(true)}
   }
 
   useEffect(()=>{
@@ -110,6 +116,7 @@ export const ContextProvider = ({ children }) => {
   return (
     <AppContext.Provider
       value={{
+        refConnectButton,
         account,
         setAccount,
         pair,  

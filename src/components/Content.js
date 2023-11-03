@@ -13,18 +13,19 @@ import astar_logo_png from "../images/astar.png"
 import phala_logo from "../images/phala_logo.svg"
 
 import initPng from '../images/init.png'
+import toast from 'react-hot-toast';
 //Object.values(coins).forEach((ele)=>{console.log(ele)})
 
 export function Content() {
 
-  const {lastUpdate, stepDef, step, previousStep, processUpdate} = useContext(AppContext);
+  const {account, refConnectButton, lastUpdate, stepDef, step, previousStep, processUpdate} = useContext(AppContext);
   const {contract, doTx, doDryRun, dryRun, randomNumber} = useContext(ContractContext)
   const {vrf_query_answerRequest} = useContext(PhatContractContext)
 
   //const step=4
   
   const [localRandom,setLocalRandom] = useState()
-  const [consoleStepDef,setConsoleStepDef] = useState("")
+  const [consoleStepDef,setConsoleStepDef] = useState("Idle")
 
   const barEmpty = {bar:'determinate',barpc:0}
   const barLoading = {bar:'indeterminate',barpc:0}
@@ -49,15 +50,23 @@ export function Content() {
   },[processUpdate])
 
   useEffect(()=> {
-    let tmp = consoleStepDef
-    if (step==1) {
-      tmp=<></>
-    }
-    else {
-      tmp=<>{tmp}<br/></>
-    }
-    setConsoleStepDef(<>{tmp}{stepDef}</>)
+    let tmp = step==1 ? <></> : <>{consoleStepDef}<br/></>
+
+    if (step==1) {setConsoleStepDef(<>{tmp}{stepDef}</>)}
+    if (step==2) {setConsoleStepDef(<>{tmp}{stepDef}</>)}
+    if (step==3) {setConsoleStepDef(<>{tmp}{stepDef}</>)}
+    if (step==4) {setConsoleStepDef(<>{tmp}{stepDef}</>)}
+    if (step==5) {setConsoleStepDef(<>{tmp}{stepDef}</>)}
+
   },[stepDef])
+
+/*
+Initiating process: sending a request to wallet, waiting for approval
+Astar Tx `requestRandomValue`: sending a VRF request to the Astar smart contract
+Phat Contract query: Process the VRF request by a Phat Contract rollup transaction
+Astar Event: waiting for the result to be stored in the Astar Smart Contract event `RandomValueReceived`
+Random number has successfuly been processed and has been stored into the Astar smart contract.
+*/
 
   const refMin = useRef()
   const refMax = useRef()
@@ -66,37 +75,55 @@ export function Content() {
     setLocalRandom(randomNumber)
   },[randomNumber])
 
+  const toastOptions = {
+    duration: 10000,
+    position: 'bottom-right',
+    style: {maxWidth:600},
+  }
+  const toastWithDismiss = (message) => {
+    const toastValue = (t) => (
+      <span className="text-right">
+        <span>{message}</span>
+        <Button sx={{margin:'0 3px', textTransform:'none'}} onClick={() => toast.dismiss(t.id)}>X</Button>
+      </span>
+    )
+    toast(toastValue,toastOptions);
+  }
   const sendRequest = () => {
+    if (!account) {refConnectButton.current.click()}
     if (refMin.current?.value && refMax.current?.value) {
       if (refMin.current?.value < refMax.current?.value) {
         console.log("sending tx with min="+refMin.current.value+" and max="+refMax.current.value)
         doTx("requestRandomValue",refMin.current.value,refMax.current.value)
       }
       else {
-        console.log("Min must be < than Max")
+        toastWithDismiss("Min must be lower than Max")
       }
     }
     else {
-      console.log("must have a Min and Max value")
+      toastWithDismiss("Please enter a Min and Max value");
     }
   }
 
   const boxopts = {
     display: 'flex', justifyContent:'center',
     border:"1px rgba(255, 255, 255, 0.23) solid", 
-    margin:"20px 40px", 
+    margin:{xs:"10px 20px",sm: '20px 40px'}, 
     padding:2, 
     backgroundColor:"#0b0a0a", 
     borderRadius:3,
     fontSize: '0.9rem'
   }
   const resopts={
-    display: 'inline',
-    border:"1px rgba(255, 255, 255, 0.23) solid",
-    padding:'7px',
-    backgroundColor:'#202020',
-    color:'#00FF00',
-    borderRadius: '10px'
+    display: 'inline-block',
+    border: '1px rgba(255, 255, 255, 0.23) solid',
+    padding: '0 5px',
+    backgroundColor: '#202020',
+    color: '#00FF00',
+    borderRadius: '10px',
+    minWidth: '45px',
+    height: '1.5em',
+    verticalAlign: 'bottom'
   }
   const lineopts = {
     backgroundColor:'#235500', 
@@ -112,6 +139,7 @@ export function Content() {
 
 
   return <>
+  <button onClick={()=>vrf_query_answerRequest()}>vrf_query_answerRequest</button>
     <Box sx={{margin:"0 40px 0px 0", flexDirection: 'row-reverse' }} display={'flex'} >
       <ApiStatus context="phala" /><ApiStatus context="astar" />
     </Box>
@@ -123,8 +151,8 @@ export function Content() {
       <Button sx={{lineHeight:1.4, fontSize:'0.8rem'}} onClick={sendRequest} variant="contained">Send Request</Button>
     </Box>
 
-    <Box className='reset-line-height' sx={{ border:"1px green solid", margin:"40px 40px 20px 40px", padding:0, backgroundColor:"#202020", borderRadius:3}}>
-      <Box sx={{paddingY:'5%', position:'relative'}}>
+    <Box className='reset-line-height' sx={{...boxopts, border:"1px green solid", backgroundColor:"#202020"}}>
+      <Box sx={{paddingY:'5%', position:'relative', width:'100%'}}>
         <LinearProgress variant={bar1.bar} value={bar1.barpc} sx={{...lineopts,margin:'7.7% 0 0 22%'}} />
         <LinearProgress variant={bar2.bar} value={bar2.barpc} sx={{...lineopts,margin:'7.7% 0 0 44%'}} />
         <LinearProgress variant={bar3.bar} value={bar3.barpc} sx={{...lineopts,margin:'7.7% 0 0 66%'}} />
@@ -143,9 +171,20 @@ export function Content() {
       </Box>
     </Box>
     <Box sx={{...boxopts,display: 'flex', justifyContent:'space-around', fontSize:'1.5em'}}>
-      <Box>Request: Min=<Box sx={resopts}>{localRandom?.requestMin}</Box> Max=<Box sx={resopts}>{localRandom?.requestMax}</Box></Box>
+      <Box>Request: 
+        <Box sx={{display:'inline-flex', overflow:'auto'}}>
+          Min=<Box sx={resopts}>{localRandom?.requestMin}</Box>
+        </Box> 
+        <Box sx={{display:'inline-flex', overflow:'auto'}}>
+          Max=<Box sx={resopts}>{localRandom?.requestMax}</Box>
+        </Box>
+      </Box>
       &nbsp;
-      <Box>Result: VRF=<Box sx={resopts}>{localRandom?.randomNumber}</Box></Box>
+      <Box>Result: 
+        <Box sx={{display:'inline-flex', overflow:'auto'}}>
+          VRF=<Box sx={resopts}>{localRandom?.randomNumber}</Box>
+        </Box>
+      </Box>
     </Box>
 
     <Box sx={{...boxopts, justifyContent:'left'}}>
@@ -161,7 +200,7 @@ export function Content() {
     <button onClick={()=>doDryRun()}>doDryRun</button>
     <button onClick={()=>doTx("requestRandomValue",10,100)}>doTx requestRandomValue 10 100</button>
     <br/>
-    <button onClick={()=>vrf_query_answerRequest()}>vrf_query_answerRequest</button>
+    
 
     <Box>{localRandom?.requestAddress}</Box>
     <Box>{localRandom?.requestNonce}</Box>

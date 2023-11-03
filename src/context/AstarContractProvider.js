@@ -5,6 +5,7 @@ import { AppContext } from "../context/ContextProvider";
 import { ORACLE_CONTRACT_ABI_METADATA, ORACLE_CONTRACT_ADDRESS } from "../lib/constants";
 import { formatAddress } from "../lib/formatAddress"
 import { globalProcess } from "../lib/gobalProcess";
+import { Button } from "@mui/material";
 //import * as vrf_consumer from "../lib/vrf_consumer"
 import BN from "bn.js"
 import toast from 'react-hot-toast';
@@ -22,6 +23,18 @@ export const AstarContractProvider = ({ children }) => {
   const [abi,setAbi] = useState();
   const [claimDryRunRes,setClaimDryRunRes] = useState(undefined)
   const [randomNumber, setRandomNumber] = useState({})
+  const [urlOfQueryTx, setUrlOfQueryTx] = useState()
+  const [urlOfAnswerEvent, setUrlOfAnswerEvent] = useState()
+
+  const emptyRandomNumber = {
+    requestAddress: undefined,
+    requestNonce: undefined,
+    requestMin: undefined,
+    requestMax: undefined,
+    requestTime: undefined,
+    randomNumber: undefined,
+    responseTime: undefined
+  };
 
   useEffect(() => {
     if (api) loadVrfContract();
@@ -121,7 +134,7 @@ export const AstarContractProvider = ({ children }) => {
     //console.log("DRYRUNRES",gasRequired, result, error)
     
     if (error) {
-      console.log("ERROR")
+      console.log("ERROR in Tx")
       toast.error(
         error,
         {position: 'bottom-right'}
@@ -129,7 +142,8 @@ export const AstarContractProvider = ({ children }) => {
       return
     }
     
-    setStep(1); // sending request...
+    setStep(1);
+    setRandomNumber({...emptyRandomNumber}) // sending request...
     
     const txToast = toast.loading(
       'Sending Transaction...',
@@ -139,21 +153,13 @@ export const AstarContractProvider = ({ children }) => {
     );
 
     let txError = undefined;
-    const tmpRandomNumber = {
-      requestAddress: undefined,
-      requestNonce: undefined,
-      requestMin: undefined,
-      requestMax: undefined,
-      requestTime: undefined,
-      randomNumber: undefined,
-      responseTime: undefined
-    };
+    const tmpRandomNumber = {...emptyRandomNumber};
 
     const unsubEvents = await api.query.system.events(events => 
       events.forEach(
-        ({event}) => {
+        (record) => {
+          const event = record.event
           if (event.data.contract?.toString()===ORACLE_CONTRACT_ADDRESS[network] && api.events.contracts.ContractEmitted.is(event) ) {
-            //console.log(event)
             let decoded_event;
             try {
               decoded_event = abi.decodeEvent(event.data.data)
@@ -168,7 +174,7 @@ export const AstarContractProvider = ({ children }) => {
                 tmpRandomNumber.requestMin = decoded_event_array[2]
                 tmpRandomNumber.requestMax = decoded_event_array[3]
                 tmpRandomNumber.requestTime = decoded_event_array[4]
-                console.log("EVENT 1",tmpRandomNumber)
+                //console.log("EVENT 1",tmpRandomNumber)
                 setRandomNumber(tmpRandomNumber)
 
                 setStep(3); // Query Phat contract
@@ -218,14 +224,15 @@ export const AstarContractProvider = ({ children }) => {
           let txMessage;
           if (txError) txMessage="Transaction Failed ("+txError+")"
           else txMessage="Transaction sent successfully"
+          setUrlOfQueryTx("https://"+network+".subscan.io/extrinsic/"+res.txHash.toHex())
           const toastValue = (t) => (
             <span className="toast-tx-result text-right">
               {txMessage}<br/><a target="_blank" href={"https://"+network+".subscan.io/extrinsic/"+res.txHash.toHex()}>show in Subscan</a>
-              <button className="btn-tx-result" onClick={() => toast.dismiss(t.id)}> close </button>
+              <Button sx={{margin:'0 3px', textTransform:'none'}} onClick={() => toast.dismiss(t.id)}>X</Button>
             </span>
           )
           const toastOptions = {
-            duration: 6000000,
+            duration: 5000,
             position: 'bottom-right',
             style: {maxWidth:600},
           }
