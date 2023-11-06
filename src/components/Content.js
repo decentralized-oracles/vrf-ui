@@ -171,18 +171,18 @@ Random number has successfuly been processed and has been stored into the Astar 
         </Box>
       </Box>
     </Box>
-    <Box sx={{...boxopts,display: 'flex', justifyContent:'space-around', fontSize:'1.5em'}}>
+    <Box sx={{...boxopts,display: 'flex', justifyContent:'space-around', fontSize:'1.2em'}}>
       <Box>Request: 
-        <Box sx={{display:'inline-flex', overflow:'auto', marginLeft:'5px'}}>
+        <Box sx={{display:'inline-flex', overflow:'hidden', marginLeft:'5px'}}>
           Min=<Box sx={resopts}>{localRandom?.requestMin}</Box>
         </Box> 
-        <Box sx={{display:'inline-flex', overflow:'auto', marginLeft:'5px'}}>
+        <Box sx={{display:'inline-flex', overflow:'hidden', marginLeft:'5px'}}>
           Max=<Box sx={resopts}>{localRandom?.requestMax}</Box>
         </Box>
       </Box>
       &nbsp;
       <Box>Result: 
-        <Box sx={{display:'inline-flex', overflow:'auto', marginLeft:'5px'}}>
+        <Box sx={{display:'inline-flex', overflow:'hidden', marginLeft:'5px'}}>
           VRF=<Box sx={resopts}>{localRandom?.randomNumber}</Box>
         </Box>
       </Box>
