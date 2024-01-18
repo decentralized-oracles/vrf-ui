@@ -1,6 +1,6 @@
 {
   "source": {
-    "hash": "0x5690fa7e4afdc2af17767c4888b03424efbe715ca2e22583692c2a02152c18c3",
+    "hash": "0xb9bd62f4c73fa8bbb27c04a8db3946c38af39dc1a7462010ddcfc976425aba7d",
     "language": "ink! 4.3.0",
     "compiler": "rustc 1.72.0",
     "build_info": {
@@ -15,7 +15,7 @@
   },
   "contract": {
     "name": "vrf_oracle",
-    "version": "0.1.0",
+    "version": "0.0.1",
     "authors": [
       "GuiGou"
     ]
@@ -50,32 +50,32 @@
         "displayName": [
           "Balance"
         ],
-        "type": 21
+        "type": 23
       },
       "blockNumber": {
         "displayName": [
           "BlockNumber"
         ],
-        "type": 25
+        "type": 28
       },
       "chainExtension": {
         "displayName": [
           "ChainExtension"
         ],
-        "type": 26
+        "type": 29
       },
       "hash": {
         "displayName": [
           "Hash"
         ],
-        "type": 24
+        "type": 26
       },
       "maxEventTopics": 4,
       "timestamp": {
         "displayName": [
           "Timestamp"
         ],
-        "type": 20
+        "type": 27
       }
     },
     "events": [],
@@ -157,7 +157,7 @@
         "docs": [
           " Set attestor key.",
           "",
-          " For dev purpose. (admin only)"
+          " For dev purpose."
         ],
         "label": "set_attest_key",
         "mutates": true,
@@ -175,7 +175,7 @@
         "args": [],
         "default": false,
         "docs": [
-          " Gets the sender address used by this rollup (in case of meta-transaction)"
+          " Gets the sender address used by this rollup"
         ],
         "label": "get_sender_address",
         "mutates": false,
@@ -193,7 +193,7 @@
         "args": [],
         "default": false,
         "docs": [
-          " Gets the config of the target consumer contract"
+          " Gets the config"
         ],
         "label": "get_target_contract",
         "mutates": false,
@@ -257,7 +257,7 @@
         ],
         "default": false,
         "docs": [
-          " Configures the target consumer contract (admin only)"
+          " Configures the rollup target (admin only)"
         ],
         "label": "config_target_contract",
         "mutates": true,
@@ -270,6 +270,87 @@
           "type": 11
         },
         "selector": "0x8b9485bf"
+      },
+      {
+        "args": [],
+        "default": false,
+        "docs": [],
+        "label": "get_core_js",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 18
+        },
+        "selector": "0xae28ba63"
+      },
+      {
+        "args": [
+          {
+            "label": "core_js",
+            "type": {
+              "displayName": [
+                "String"
+              ],
+              "type": 3
+            }
+          },
+          {
+            "label": "settings",
+            "type": {
+              "displayName": [
+                "String"
+              ],
+              "type": 3
+            }
+          }
+        ],
+        "default": false,
+        "docs": [
+          " Configures the core script (admin only)"
+        ],
+        "label": "config_core_js",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 11
+        },
+        "selector": "0x048eeff5"
+      },
+      {
+        "args": [
+          {
+            "label": "settings",
+            "type": {
+              "displayName": [
+                "String"
+              ],
+              "type": 3
+            }
+          }
+        ],
+        "default": false,
+        "docs": [
+          " Set the configuration (admin only)"
+        ],
+        "label": "config_core_js_settings",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 11
+        },
+        "selector": "0x348eb731"
       },
       {
         "args": [
@@ -313,7 +394,7 @@
             "ink",
             "MessageResult"
           ],
-          "type": 18
+          "type": 21
         },
         "selector": "0x2a5bcd75"
       },
@@ -323,43 +404,23 @@
             "label": "min",
             "type": {
               "displayName": [
-                "u64"
+                "u128"
               ],
-              "type": 20
+              "type": 23
             }
           },
           {
             "label": "max",
             "type": {
               "displayName": [
-                "u64"
-              ],
-              "type": 20
-            }
-          },
-          {
-            "label": "requestor_id",
-            "type": {
-              "displayName": [
-                "AccountId"
-              ],
-              "type": 0
-            }
-          },
-          {
-            "label": "requestor_nonce",
-            "type": {
-              "displayName": [
                 "u128"
               ],
-              "type": 21
+              "type": 23
             }
           }
         ],
         "default": false,
-        "docs": [
-          " Simulate and return a random number (admin only - for dev purpose)"
-        ],
+        "docs": [],
         "label": "get_random",
         "mutates": false,
         "payable": false,
@@ -368,7 +429,7 @@
             "ink",
             "MessageResult"
           ],
-          "type": 22
+          "type": 24
         },
         "selector": "0xd975d597"
       }
@@ -509,6 +570,54 @@
                 }
               },
               "name": "attest_key"
+            },
+            {
+              "layout": {
+                "root": {
+                  "layout": {
+                    "struct": {
+                      "fields": [
+                        {
+                          "layout": {
+                            "leaf": {
+                              "key": "0x1c5055ba",
+                              "ty": 3
+                            }
+                          },
+                          "name": "script"
+                        },
+                        {
+                          "layout": {
+                            "leaf": {
+                              "key": "0x1c5055ba",
+                              "ty": 3
+                            }
+                          },
+                          "name": "settings"
+                        },
+                        {
+                          "layout": {
+                            "array": {
+                              "layout": {
+                                "leaf": {
+                                  "key": "0x1c5055ba",
+                                  "ty": 2
+                                }
+                              },
+                              "len": 32,
+                              "offset": "0x1c5055ba"
+                            }
+                          },
+                          "name": "code_hash"
+                        }
+                      ],
+                      "name": "CoreJs"
+                    }
+                  },
+                  "root_key": "0x1c5055ba"
+                }
+              },
+              "name": "core_js"
             }
           ],
           "name": "Vrf"
@@ -861,75 +970,83 @@
               },
               {
                 "index": 2,
-                "name": "InvalidKeyLength"
+                "name": "CoreNotConfigured"
               },
               {
                 "index": 3,
-                "name": "InvalidAddressLength"
+                "name": "InvalidKeyLength"
               },
               {
                 "index": 4,
-                "name": "NoRequestInQueue"
+                "name": "InvalidAddressLength"
               },
               {
                 "index": 5,
-                "name": "FailedToCreateClient"
+                "name": "NoRequestInQueue"
               },
               {
                 "index": 6,
-                "name": "FailedToCommitTx"
+                "name": "FailedToCreateClient"
               },
               {
                 "index": 7,
-                "name": "FailedToFetchPrice"
+                "name": "FailedToCommitTx"
               },
               {
                 "index": 8,
-                "name": "FailedToGetStorage"
+                "name": "FailedToFetchPrice"
               },
               {
                 "index": 9,
-                "name": "FailedToCreateTransaction"
+                "name": "FailedToGetStorage"
               },
               {
                 "index": 10,
-                "name": "FailedToSendTransaction"
+                "name": "FailedToCreateTransaction"
               },
               {
                 "index": 11,
-                "name": "FailedToGetBlockHash"
+                "name": "FailedToSendTransaction"
               },
               {
                 "index": 12,
-                "name": "FailedToDecode"
+                "name": "FailedToGetBlockHash"
               },
               {
                 "index": 13,
-                "name": "InvalidRequest"
+                "name": "FailedToDecode"
               },
               {
                 "index": 14,
-                "name": "FailedToCallRollup"
+                "name": "InvalidRequest"
               },
               {
                 "index": 15,
-                "name": "MinGreaterThanMax"
+                "name": "FailedToCallRollup"
               },
               {
                 "index": 16,
-                "name": "DivByZero"
+                "name": "MinGreaterThanMax"
               },
               {
+                "fields": [
+                  {
+                    "type": 3,
+                    "typeName": "String"
+                  }
+                ],
                 "index": 17,
-                "name": "MulOverFlow"
+                "name": "JsError"
               },
               {
+                "fields": [
+                  {
+                    "type": 3,
+                    "typeName": "String"
+                  }
+                ],
                 "index": 18,
-                "name": "AddOverFlow"
-              },
-              {
-                "index": 19,
-                "name": "SubOverFlow"
+                "name": "ParseIntError"
               }
             ]
           }
@@ -1120,6 +1237,112 @@
           "variant": {
             "variants": [
               {
+                "index": 0,
+                "name": "None"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 20
+                  }
+                ],
+                "index": 1,
+                "name": "Some"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 20
+          }
+        ],
+        "path": [
+          "Option"
+        ]
+      }
+    },
+    {
+      "id": 20,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "name": "script",
+                "type": 3,
+                "typeName": "String"
+              },
+              {
+                "name": "settings",
+                "type": 3,
+                "typeName": "String"
+              },
+              {
+                "name": "code_hash",
+                "type": 1,
+                "typeName": "CodeHash"
+              }
+            ]
+          }
+        },
+        "path": [
+          "vrf_oracle",
+          "vrf_oracle",
+          "CoreJs"
+        ]
+      }
+    },
+    {
+      "id": 21,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 22
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 6
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 22
+          },
+          {
+            "name": "E",
+            "type": 6
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 22,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
                 "fields": [
                   {
                     "type": 10
@@ -1156,15 +1379,7 @@
       }
     },
     {
-      "id": 20,
-      "type": {
-        "def": {
-          "primitive": "u64"
-        }
-      }
-    },
-    {
-      "id": 21,
+      "id": 23,
       "type": {
         "def": {
           "primitive": "u128"
@@ -1172,7 +1387,7 @@
       }
     },
     {
-      "id": 22,
+      "id": 24,
       "type": {
         "def": {
           "variant": {
@@ -1180,7 +1395,7 @@
               {
                 "fields": [
                   {
-                    "type": 23
+                    "type": 25
                   }
                 ],
                 "index": 0,
@@ -1201,7 +1416,7 @@
         "params": [
           {
             "name": "T",
-            "type": 23
+            "type": 25
           },
           {
             "name": "E",
@@ -1214,7 +1429,7 @@
       }
     },
     {
-      "id": 23,
+      "id": 25,
       "type": {
         "def": {
           "variant": {
@@ -1222,7 +1437,7 @@
               {
                 "fields": [
                   {
-                    "type": 20
+                    "type": 23
                   }
                 ],
                 "index": 0,
@@ -1243,7 +1458,7 @@
         "params": [
           {
             "name": "T",
-            "type": 20
+            "type": 23
           },
           {
             "name": "E",
@@ -1256,7 +1471,7 @@
       }
     },
     {
-      "id": 24,
+      "id": 26,
       "type": {
         "def": {
           "composite": {
@@ -1276,7 +1491,15 @@
       }
     },
     {
-      "id": 25,
+      "id": 27,
+      "type": {
+        "def": {
+          "primitive": "u64"
+        }
+      }
+    },
+    {
+      "id": 28,
       "type": {
         "def": {
           "primitive": "u32"
@@ -1284,7 +1507,7 @@
       }
     },
     {
-      "id": 26,
+      "id": 29,
       "type": {
         "def": {
           "variant": {}

@@ -8,6 +8,11 @@ import fs from 'fs/promises';
 });*/
 
 export default defineConfig(() => ({
+  root: '.',
+  build: {
+    outDir: '../dist/vrf'
+  },
+  base: '/vrf',
   plugins: [react()],
   esbuild: {
     //loader: "jsx",

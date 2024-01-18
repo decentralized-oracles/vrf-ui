@@ -22,7 +22,7 @@ export const PhatContractProvider = ({ children }) => {
         try {
           const pair = new Keyring({ type: 'sr25519' }).addFromUri("//Alice")
           setPair(pair)
-          const contractId = "0xa6c5baac29ef1e1bdfd6a5d2172d5cd85e4351497f7bd2b1a33c8c7be8b53feb";
+          const contractId = "0x593da5483df3e2d82507838a7fd7ac7755c8bd0ff2c8cc49f2ae128d3d8d6c76";
           
           const phatRegistry = await OnChainRegistry.create(api)
           const abi = JSON.parse(JSON.stringify(vrf_oracle_phat))
@@ -37,7 +37,7 @@ export const PhatContractProvider = ({ children }) => {
           //console.log("certificate",cert)
           //console.log("pair",pair.address)
           //console.log("contract:",contract.abi.messages.map((e)=>{return e.method}))
-          console.log("Phat Contract loaded successfully");
+          console.log(contract,"Phat Contract loaded successfully");
         } 
         catch (err) {
             console.log("Error in Phat contract loading",err);
@@ -51,6 +51,7 @@ export const PhatContractProvider = ({ children }) => {
   },[api])
 
   async function vrf_query_answerRequest() {
+    console.log(vrf_phatContract)
     if (api && vrf_phatContract) {
         let result;
         try {
@@ -75,12 +76,13 @@ export const PhatContractProvider = ({ children }) => {
         }
     }
   }
+
   const delay = ms => new Promise(res => setTimeout(res, ms));
 
   async function vrf_query_answerRequest_wait_NoRequestInQueue() {
     let result
     let nb = 0
-    await delay(10000);
+    await delay(20000);
     
     while (result != "NoRequestInQueue" && nb < 20 && !interruptPC) {
       console.log("interruptPC",interruptPC)

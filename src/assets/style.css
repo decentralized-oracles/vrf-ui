@@ -2,6 +2,40 @@
     font-family: unbounded;
     src: url(Unbounded-Regular.ttf);
 }
+
+
+a {
+    color: rgb(204, 0, 96)
+}
+a:link {
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+.MuiMenu-list a {
+    color: inherit;
+}
+.MuiMenu-list a:hover {
+    text-decoration: none;
+}
+h2 {
+    font-family:"unbounded";
+    font-size: 1.3em;
+}
+h2,h3 {
+    line-height: 1.2;
+}
+
+.card-btn {
+    padding: 5px 10px !important;
+}
+.card-btn-img {
+    filter: invert(1);
+    width: 20px;
+    height: 20px;
+}
+
 span.MuiChip-label {
     padding-left: 0;
 }

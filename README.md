@@ -1,4 +1,3 @@
-
 # Decentralized Oracle - VRF
 
 ## Description
@@ -11,7 +10,7 @@ main branch is deployed on [https://vrf-decentralized-oracle.substrate.fi/](http
 
 Please make sure you have an installed Extension (Polkadot.js compatible)
 
-*Currently the dApp is available on Sibuya and Phala-poc5*
+*Currently the dApp is available on Sibuya and Phala-poc6*
 
 On Shibuya, you need SBY to try it, you can get some by using the faucet available here: https://portal.astar.network/#/shibuya-testnet/assets
 

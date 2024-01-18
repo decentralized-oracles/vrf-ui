@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
-import { Box, Button, Grid, TextField, LinearProgress, CircularProgress} from '@mui/material';
+import { Container, Box, Button, Grid, TextField, LinearProgress, CircularProgress} from '@mui/material';
 import { AppContext } from '../context/ContextProvider';
 import { ApiStatus } from './ApiStatus';
 import Lottie from "react-lottie";
@@ -140,65 +140,64 @@ Random number has successfuly been processed and has been stored into the Astar 
 
 
   return <>
-  
-    <Box sx={{margin:"0 40px 0px 0", flexDirection: 'row-reverse' }} display={'flex'} >
+    <Box sx={{margin:"40px 40px 0px 0", flexDirection: 'row-reverse' }} display={'flex'} >
       <ApiStatus context="phala" /><ApiStatus context="astar" />
     </Box>
-   
+    
+   <Container sx={{pt:2}} maxWidth="md">
+      
 
-    <Box sx={{padding:"50px 40px 0 40px"}} display={'flex'} justifyContent={'center'}>
-      <TextField inputRef={refMin} sx={{margin:'0 20px 0 0'}} id="min-value" label="Min" variant="outlined" />
-      <TextField inputRef={refMax} sx={{margin:'0 20px 0 0'}} id="max-value" label="Max" variant="outlined" />
-      <Button sx={{lineHeight:1.4, fontSize:'0.8rem'}} onClick={sendRequest} variant="contained">Send Request</Button>
-    </Box>
+      <Box sx={{padding:"50px 40px 0 40px"}} display={'flex'} justifyContent={'center'}>
+        <TextField inputRef={refMin} sx={{margin:'0 20px 0 0'}} id="min-value" label="Min" variant="outlined" />
+        <TextField inputRef={refMax} sx={{margin:'0 20px 0 0'}} id="max-value" label="Max" variant="outlined" />
+        <Button sx={{lineHeight:1.4, fontSize:'0.8rem'}} onClick={sendRequest} variant="contained">Send Request</Button>
+      </Box>
 
-    <Box className='reset-line-height' sx={{...boxopts, border:"1px green solid", backgroundColor:"#202020"}}>
-      <Box sx={{paddingY:'5%', position:'relative', width:'100%'}}>
-        <LinearProgress variant={bar1.bar} value={bar1.barpc} sx={{...lineopts,margin:'7.7% 0 0 22%'}} />
-        <LinearProgress variant={bar2.bar} value={bar2.barpc} sx={{...lineopts,margin:'7.7% 0 0 44%'}} />
-        <LinearProgress variant={bar3.bar} value={bar3.barpc} sx={{...lineopts,margin:'7.7% 0 0 66%'}} />
-        <Box sx={{width:'17%', marginLeft:'9%'}} className={'logo-wrapper'+circle1}>
-          <Box className='logo-img' component="img" src={dapp_img} alt='Logo Astar' />
-        </Box>
-        <Box className={'logo-wrapper'+circle2}>
-          <Box className='logo-img' component="img" src={astar_logo_png} alt='Logo Astar' />
-        </Box>
-        <Box className={'logo-wrapper'+circle3}>
-          <Box className='logo-img' component="img" src={phala_logo} alt='Logo Astar' />
-        </Box>
-        <Box className={'logo-wrapper'+circle4}>
-          <Box className='logo-img' component="img" src={astar_logo_png} alt='Logo Astar' />
+      <Box id="process-overview" className='reset-line-height' sx={{...boxopts, border:"1px green solid", backgroundColor:"#202020"}}>
+        <Box sx={{paddingY:'5%', position:'relative', width:'100%'}}>
+          <LinearProgress variant={bar1.bar} value={bar1.barpc} sx={{...lineopts,margin:'7.7% 0 0 22%'}} />
+          <LinearProgress variant={bar2.bar} value={bar2.barpc} sx={{...lineopts,margin:'7.7% 0 0 44%'}} />
+          <LinearProgress variant={bar3.bar} value={bar3.barpc} sx={{...lineopts,margin:'7.7% 0 0 66%'}} />
+          <Box sx={{width:'17%', marginLeft:'9%'}} className={'logo-wrapper'+circle1}>
+            <Box className='logo-img' component="img" src={dapp_img} alt='Logo Astar' />
+          </Box>
+          <Box className={'logo-wrapper'+circle2}>
+            <Box className='logo-img' component="img" src={astar_logo_png} alt='Logo Astar' />
+          </Box>
+          <Box className={'logo-wrapper'+circle3}>
+            <Box className='logo-img' component="img" src={phala_logo} alt='Logo Astar' />
+          </Box>
+          <Box className={'logo-wrapper'+circle4}>
+            <Box className='logo-img' component="img" src={astar_logo_png} alt='Logo Astar' />
+          </Box>
         </Box>
       </Box>
-    </Box>
-    <Box sx={{...boxopts,display: 'flex', justifyContent:'space-around', fontSize:'1.2em'}}>
-      <Box>Request: 
-        <Box sx={{display:'inline-flex', overflow:'hidden', marginLeft:'5px'}}>
-          Min=<Box sx={resopts}>{localRandom?.requestMin}</Box>
-        </Box> 
-        <Box sx={{display:'inline-flex', overflow:'hidden', marginLeft:'5px'}}>
-          Max=<Box sx={resopts}>{localRandom?.requestMax}</Box>
+      <Box sx={{...boxopts,display: 'flex', justifyContent:'space-around', fontSize:'1.2em'}}>
+        <Box>Request: 
+          <Box sx={{display:'inline-flex', overflow:'hidden', marginLeft:'5px'}}>
+            Min=<Box sx={resopts}>{localRandom?.requestMin}</Box>
+          </Box> 
+          <Box sx={{display:'inline-flex', overflow:'hidden', marginLeft:'5px'}}>
+            Max=<Box sx={resopts}>{localRandom?.requestMax}</Box>
+          </Box>
+        </Box>
+        &nbsp;
+        <Box>Result: 
+          <Box sx={{display:'inline-flex', overflow:'hidden', marginLeft:'5px'}}>
+            VRF=<Box sx={resopts}>{localRandom?.randomNumber}</Box>
+          </Box>
         </Box>
       </Box>
-      &nbsp;
-      <Box>Result: 
-        <Box sx={{display:'inline-flex', overflow:'hidden', marginLeft:'5px'}}>
-          VRF=<Box sx={resopts}>{localRandom?.randomNumber}</Box>
-        </Box>
+
+      <Box sx={{...boxopts, justifyContent:'left'}}>
+        {consoleStepDef}
       </Box>
-    </Box>
-
-    <Box sx={{...boxopts, justifyContent:'left'}}>
-      {consoleStepDef}
-    </Box>
-        
-
-
+    </Container>
   </>
 }
 
   /*
-    <button onClick={()=>doDryRun()}>doDryRun</button>
+    
     <button onClick={()=>doTx("requestRandomValue",10,100)}>doTx requestRandomValue 10 100</button>
     <br/>
     <button onClick={()=>vrf_query_answerRequest()}>vrf_query_answerRequest</button>

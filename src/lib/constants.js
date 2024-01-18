@@ -2,7 +2,7 @@ export const DAPP_NAME = "Decentralized Oracles";
 
 export const DEFAULT_NETWORKS = {
   astar: "shibuya",
-  phala: "poc5",
+  phala: "poc6",
 }
 
 export const SS58_PREFIX = {
@@ -41,14 +41,15 @@ export const PROVIDER_ENDPOINTS = {
 }
 
 export const ORACLE_CONTRACT_ADDRESS = {
-  shibuya:  "aesULxtrttD4VGe1oDWGnDihbknjQ44GYwN1L8RXMcWZxis",
+  //shibuya:  "aesULxtrttD4VGe1oDWGnDihbknjQ44GYwN1L8RXMcWZxis",
+  shibuya: "ZbPsgJhzaLc9D6kWYdi1hQwaGLkr3hpBgtoPqK8ayXbdDDJ"
 };
 
 export const PHALA_PROVIDER_ENDPOINTS = {
-  poc5: "wss://poc5.phala.network/ws"
+  poc6: "wss://poc6.phala.network/ws"
 }
 export const PHAT_CONTRACT_ID = {
-  poc5: "0xa6c5baac29ef1e1bdfd6a5d2172d5cd85e4351497f7bd2b1a33c8c7be8b53feb"
+  poc6: "0x593da5483df3e2d82507838a7fd7ac7755c8bd0ff2c8cc49f2ae128d3d8d6c76"
 }
 
 import vrf_contract_metadata from "./vrf_contract_metadata.json"

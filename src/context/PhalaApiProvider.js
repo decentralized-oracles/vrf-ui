@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 
 export const PhalaApiContext = React.createContext();
 
-const WS_PROVIDER = "wss://poc5.phala.network/ws";
+const WS_PROVIDER = "wss://poc6.phala.network/ws";
 
 export const PhalaApiProvider = ({ children }) => {
   
