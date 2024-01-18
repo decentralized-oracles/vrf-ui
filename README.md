@@ -4,7 +4,7 @@
 
 This repository is the UI for [VRF contracts](https://github.com/decentralized-oracles/vrf)
 
-main branch is deployed on [https://vrf-decentralized-oracle.substrate.fi/](https://vrf-decentralized-oracle.substrate.fi/)
+main branch is deployed on [https://decentralized-oracle.substrate.fi/vrf](https://decentralized-oracle.substrate.fi/vrf)
 
 ## Usage
 
